@@ -1,4 +1,5 @@
 const express = require("express");
+const os = require("os");
 const app = express();
 app.use(express.json());
 
@@ -12,9 +13,12 @@ app.post("/expenses", (req, res) => {
   res.status(201).json(expense);
 });
 
-// List expenses
+// List expenses (with pod info)
 app.get("/expenses", (req, res) => {
-  res.json(expenses);
+  res.json({
+    pod: os.hostname(), // shows which pod handled the request
+    data: expenses,
+  });
 });
 
 // Delete expense
